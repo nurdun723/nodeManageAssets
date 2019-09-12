@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const app = express();
 
 /**
@@ -25,8 +26,14 @@ app.use(bodyParser.urlencoded({extended:false}))
 //连接数据库
 mongoose.connect(db).then(()=>{console.log('连接数据库成功')}).catch(err=>{console.log(err)})
 
+// passport 初始化
+app.use(passport.initialize());
+require('./config/passport')(passport);
+
 //使用api
 app.use("/api/users",users);
+
+
 
 //process.env.PORT 读取当前环境下的port值
 const port = process.env.PORT || 3000;

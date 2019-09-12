@@ -3,8 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');//加密插件
 const jwt = require('jsonwebtoken');//生成tocken的插件
 const toekenkey = require('../../config/urlconfigs').secreteKey
+const passport = require('passport');
 const User = require('../../model/user');
-
 
 //注册接口
 router.post('/register',(req,res)=>{
@@ -70,13 +70,22 @@ router.post('/login',(req,res)=>{
                     if(err){
                         return res.status(500).json({"code":"500","msg":"服务端出错"});
                     }
-                    res.json({"code":200,"msg":"登录成功","data":`nur723${tocken}`});
+                    res.json({"code":200,"msg":"登录成功","data":'Bearer ' + tocken});
                 })
             }else{
                 return res.status(400).json({"code":"400","msg":"密码有误"});
             }
         })
 
+    })
+})
+
+//
+router.get('/current',passport.authenticate('jwt',{session: false}),(req,res)=>{
+    res.json({
+        id:req.id,
+        name:req.name,
+        email:req.email
     })
 })
 
