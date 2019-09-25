@@ -17,11 +17,14 @@ router.post('/register',(req,res)=>{
                 name:reqParam.name,
                 email:reqParam.email,
                 password:reqParam.password,
+                identity:reqParam.identity
             });
-
+            //加密密码
             bcrypt.genSalt(10, function(err, salt) {
                 bcrypt.hash(userInfo.password, salt, (err, hash) => {
-                  if (err) throw err;
+                  if (err){
+                      res.status(500).json({msg:"server error"});
+                  };
         
                   userInfo.password = hash;
         
@@ -64,7 +67,7 @@ router.post('/login',(req,res)=>{
             if(ismatch){
                 //jwt.sign('规则','加密名字','过期时间','箭头函数')
                 //生成规则
-                const rule = {id:findRes.id,name:findRes.name,email:findRes.email};
+                const rule = {id:findRes.id,name:findRes.name,email:findRes.email,identity:findRes.identity};
                 //生成tocken
                 jwt.sign(rule,toekenkey,{expiresIn:3600},(err,tocken)=>{
                     if(err){
@@ -82,10 +85,12 @@ router.post('/login',(req,res)=>{
 
 //
 router.get('/current',passport.authenticate('jwt',{session: false}),(req,res)=>{
+    console.log(req)
     res.json({
-        id:req.id,
-        name:req.name,
-        email:req.email
+        id:req.user.id,
+        name:req.user.name,
+        email:req.user.email,
+        identity:req.user.identity
     })
 })
 
