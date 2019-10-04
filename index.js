@@ -8,6 +8,7 @@ const app = express();
  * 引入接口
  */
 const users = require('./router/api/user');
+const profile = require('./router/api/profile');
 
 //DB config 
 const db = require('./config/urlconfigs').mongooseUrl;
@@ -32,7 +33,7 @@ require('./config/passport')(passport);
 
 //使用api
 app.use("/api/users",users);
-
+app.use('/api/profile',profile)
 
 
 //process.env.PORT 读取当前环境下的port值

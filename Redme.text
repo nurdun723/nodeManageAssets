@@ -1,0 +1,12 @@
+
+    前后端连载：
+        1. 安装concurrently:
+            concurrently：这个插件的作用就是它会把多个终端来启动的项目绑定到一块儿的，一块儿启动
+        2. 在客户端里面的package.json文件里面定义一个启动命令
+            "start": "npm run serve"
+        3. 在服务端里的package.json 文件里面 client-install 命令 ，这个命令的作用就是当启动项目的时候， 先安装client里面的依赖模块
+            "client-install":"npm install --prefix client"
+        4. 在服务端的package.json文件里面再定义一个命令 client 是用于启动client目录下的项目
+            "client":"npm start --prefix client",
+        5. 在服务端的package.json文件里面使用concurrently 来将客户端的启动命令和服务端的启动命令整合起来
+            "dev":"concurrently \"npm run server\"  \"npm run client \""
