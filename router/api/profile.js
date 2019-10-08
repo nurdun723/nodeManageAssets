@@ -16,12 +16,15 @@ router.post('/addprofile',passport.authenticate('jwt',{session: false}),(req,res
     if(req.body.discribe) profileobj.discribe = req.body.discribe
     if(req.body.incode) profileobj.incode = req.body.incode
     if(req.body.excripe) profileobj.excripe = req.body.excripe
-    if(req.body.cashe) profileobj.cashe = req.body.cashe
-    if(req.body.remark) profileobj.remark = req.body.remark
+    if(req.body.cashe) profileobj.cashe = req.body.cash
     if(req.body.remark) profileobj.remark = req.body.remark
 
     new Profile(profileobj).save().then(profileres=>{
-        res.json(profileres);
+        if(profileres){
+            res.json({"code":200,"msg":"资金添加成功","data":''});
+        }else{
+            res.json({"code":500,"msg":"资金添加失败","data":''});
+        }
     })
 });
 

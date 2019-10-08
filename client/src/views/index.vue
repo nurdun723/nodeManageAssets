@@ -1,15 +1,21 @@
 <template>
    <div class="indexpage">
-       <HeadNav></HeadNav>
+      <HeadNav></HeadNav>
+      <LeftMenu></LeftMenu>
+      <div class="rightContainer">
+        <router-view></router-view>
+      </div>
    </div>
 </template>
 
 <script>
 import HeadNav from "../components/HeadNav";
+import LeftMenu from "../components/LeftNav";
 export default {
     name:"index",
     components: {
     HeadNav,
+    LeftMenu
   }
 }
 </script>

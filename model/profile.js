@@ -21,7 +21,7 @@ const ProfileSchma = new Schema({
         type:String,//支出
         required:true,//是否必须设置
     },
-    cashe:{
+    cash:{
         type:String,//现金
         required:true,//是否必须设置
     },

@@ -83,7 +83,7 @@ router.post('/login',(req,res)=>{
                 //生成规则
                 const rule = {id:findRes.id,name:findRes.name,email:findRes.email,identity:findRes.identity};
                 //生成tocken
-                jwt.sign(rule,toekenkey,{expiresIn:10},(err,tocken)=>{
+                jwt.sign(rule,toekenkey,{expiresIn:100},(err,tocken)=>{
                     if(err){
                         return res.status(500).json({"code":"500","msg":"服务端出错"});
                     }

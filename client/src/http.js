@@ -44,11 +44,12 @@ axios.interceptors.response.use((dataconfig)=>{
     if(status == 401){
         Message.error('tocken 已过期请重新登录');
         sessionStorage.removeItem('elemToken')
-        router.push({path:"/login"})
+        router.push({path:"/login"});
+        return Promise.reject({"code":401,"msg":"token过期","data":''});
     }else{
         Message.error(error.response.data)
+        return Promise.reject(error);
     }
-    return Promise.reject(error);
 });
 
 export default axios;
