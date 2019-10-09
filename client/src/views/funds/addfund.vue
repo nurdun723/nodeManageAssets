@@ -27,7 +27,7 @@
       <el-input type="remark" v-model="Formdata.remark"></el-input>
     </el-form-item>
     <el-form-item  class="text_right" style="text-align:right;">
-      <el-button @click="dialog.show = false">取 消</el-button>
+      <el-button @click="cancleAdd()">取 消</el-button>
       <el-button type="primary" @click="addFormdata('formref')">确 定</el-button>
     </el-form-item>
   </el-form>
@@ -77,21 +77,40 @@ export default {
           if(value){
             try{
               this.$axios.post('/api/profile/addprofile',this.Formdata).then(addresult=>{
-                if(addresult.code == 200){
-                  this.$message({
-                    message: "保存成功！",
-                    type: "success"
-                  });
-                  this.dialog.show = true;
-                }
+                if(addresult){
+                  if(addresult.code == 200){
+                    this.$message({
+                      message: "保存成功！",
+                      type: "success"
+                    });
+                    this.$emit("update");
+                    this.cancleAdd()
+                  }
+                }                
               })
             }catch(e){
-              console.log('失败')
+              this.$message({
+                message: "添加失败！",
+                type: "error"
+              });
+              this.cancleAdd()
             }
           }else{
-            console.log('请填写')
+            this.$message({
+              message: "请填写完内容",
+              type: "error"
+            });
           }
         })
+      },
+      cancleAdd(){
+        this.Formdata.type = ''
+        this.Formdata.discribe = ''
+        this.Formdata.incode = null
+        this.Formdata.excripe = null
+        this.Formdata.cash = ''
+        this.Formdata.remark = ''
+        this.dialog.show = false;
       }
     }
 

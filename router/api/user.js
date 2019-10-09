@@ -64,8 +64,6 @@ router.post('/login',(req,res)=>{
     //先获取参数
     let email = req.body.email;
     let password = req.body.password;
-    console.log(req.body)
-
     //从数据库里查找此账号
     User.findOne({email}).then(findRes=>{
         if(!findRes){
@@ -83,7 +81,7 @@ router.post('/login',(req,res)=>{
                 //生成规则
                 const rule = {id:findRes.id,name:findRes.name,email:findRes.email,identity:findRes.identity};
                 //生成tocken
-                jwt.sign(rule,toekenkey,{expiresIn:100},(err,tocken)=>{
+                jwt.sign(rule,toekenkey,{expiresIn:3600},(err,tocken)=>{
                     if(err){
                         return res.status(500).json({"code":"500","msg":"服务端出错"});
                     }

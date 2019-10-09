@@ -32,5 +32,6 @@ export default {
   width: calc(100% - 180px);
   height: calc(100% - 71px);
   overflow: auto;
+  min-width: 1220px;
 }
 </style>

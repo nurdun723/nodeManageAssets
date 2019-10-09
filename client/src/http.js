@@ -45,7 +45,7 @@ axios.interceptors.response.use((dataconfig)=>{
         Message.error('tocken 已过期请重新登录');
         sessionStorage.removeItem('elemToken')
         router.push({path:"/login"});
-        return Promise.reject({"code":401,"msg":"token过期","data":''});
+        return;
     }else{
         Message.error(error.response.data)
         return Promise.reject(error);
